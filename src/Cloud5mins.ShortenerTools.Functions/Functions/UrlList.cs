@@ -46,6 +46,12 @@ namespace Cloud5mins.ShortenerTools.Functions
         {
             _logger.LogInformation($"Starting UrlList...");
 
+            if (!StaticWebAppsAuth.IsAdmin(req))
+            {
+                var unauthresp = req.CreateResponse(HttpStatusCode.Forbidden);
+                return unauthresp;
+            }
+
             var result = new ListResponse();
             string userId = string.Empty;
 
