@@ -53,6 +53,14 @@ namespace Cloud5mins.ShortenerTools.Functions
         )
         {
             _logger.LogInformation($"__trace creating shortURL: {req}");
+
+            if (!StaticWebAppsAuth.IsAdmin(req))
+            {
+                var unauthresp = req.CreateResponse(HttpStatusCode.Forbidden);
+                return unauthresp;
+            }
+
+
             string userId = string.Empty;
             ShortRequest input;
             var result = new ShortResponse();

@@ -57,6 +57,13 @@ namespace Cloud5mins.ShortenerTools.Functions
         {
             _logger.LogInformation($"HTTP trigger - UrlArchive");
 
+
+            if (!StaticWebAppsAuth.IsAdmin(req))
+            {
+                var unauthresp = req.CreateResponse(HttpStatusCode.Forbidden);
+                return unauthresp;
+            }
+
             string userId = string.Empty;
             ShortUrlEntity input;
             ShortUrlEntity result;
